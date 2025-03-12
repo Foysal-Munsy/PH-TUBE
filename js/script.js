@@ -32,6 +32,16 @@ function displayCategories(categories) {
 const displayVideos = (videos) => {
   const videoContainer = document.getElementById("video-container");
   videoContainer.innerHTML = "";
+
+  if (videos.length === 0) {
+    videoContainer.innerHTML = `
+           <div class="col-span-full py-20 flex flex-col justify-center items-center">
+                <img src="./assets/Icon.png" alt="icon">
+                <h2 class="text-2xl font-bold">Oops!! Sorry, There is no content here</h2>
+            </div>
+    `;
+    return;
+  }
   videos.forEach((video) => {
     // console.log(video);
     const videoCard = document.createElement("div");
