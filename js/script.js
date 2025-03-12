@@ -9,46 +9,31 @@ function loadVideos() {
     .then((res) => res.json())
     .then((data) => displayVideos(data.videos));
 }
+
+const loadCategoryVideos = (id) => {
+  // console.log(id);
+  const url = `https://openapi.programming-hero.com/api/phero-tube/category/${id}`;
+  fetch(url)
+    .then((res) => res.json())
+    .then((data) => displayVideos(data.category));
+};
 // {category_id: '1001', category: 'Music'}
 function displayCategories(categories) {
   const categoryContainer = document.getElementById("category-container");
   for (const cat of categories) {
     const categoriesDiv = document.createElement("div");
     categoriesDiv.innerHTML = `
-         <button class="btn btn-sm hover:bg-[#FF1F3D] hover:text-white">${cat.category}</button>
+         <button onclick="loadCategoryVideos(${cat.category_id})" class="btn btn-sm hover:bg-[#FF1F3D] hover:text-white">${cat.category}</button>
     `;
     categoryContainer.append(categoriesDiv);
   }
 }
 
-// authors
-// :
-// [{…}]
-// category_id
-// :
-// "1001"
-// description
-// :
-// "Dive into the rhythm of 'Shape of You,' a captivating track that blends pop sensibilities with vibrant beats. Created by Olivia Mitchell, this song has already gained 100K views since its release. With its infectious melody and heartfelt lyrics, 'Shape of You' is perfect for fans looking for an uplifting musical experience. Let the music take over as Olivia's vocal prowess and unique style create a memorable listening journey."
-// others
-// :
-// {views: '100K', posted_date: '16278'}
-// thumbnail
-// :
-// "https://i.ibb.co/L1b6xSq/shape.jpg"
-// title
-// :
-// "Shape of You"
-// video_id
-// :
-// "aaaa"
-// [[Prototype]]
-// :
-// Object
 const displayVideos = (videos) => {
   const videoContainer = document.getElementById("video-container");
+  videoContainer.innerHTML = "";
   videos.forEach((video) => {
-    console.log(video);
+    // console.log(video);
     const videoCard = document.createElement("div");
     videoCard.innerHTML = `
       <div class="card bg-base-100">
@@ -83,4 +68,4 @@ const displayVideos = (videos) => {
 
 // Function Call
 loadCategories();
-loadVideos();
+// loadVideos();
