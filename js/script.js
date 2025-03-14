@@ -105,20 +105,34 @@ const displayVideos = (videos) => {
                     <div class="profile-img">
                         <div class="avatar">
                             <div class="ring-primary ring-offset-base-100 rounded-full ring ring-offset-2 w-9">
-                                <img src="${video.authors[0].profile_picture}" />
+                                <img src="${
+                                  video.authors[0].profile_picture
+                                }" />
                             </div>
                         </div>
                     </div>
                     
                     <div class="description">
                         <h2 class="text-sm font-semibold">${video.title}</h2>
-                        <p class="flex gap-3 text-sm text-gray-400">${video.authors[0].profile_name} <img class="w-5 h-5"
+                        <p class="flex gap-3 text-sm text-gray-400">${
+                          video.authors[0].profile_name
+                        } 
+                        ${
+                          video.authors[0].verified === true
+                            ? ` <img class="w-5 h-5"
                                 src="https://img.icons8.com/?size=96&id=QMxOVe0B9VzG&format=png"
-                                alt="verification-sign"></p>
-                        <p class="text-sm text-gray-400">${video.others.views} views</p>
+                                alt="verification-sign">`
+                            : " "
+                        }
+                        </p>
+                        <p class="text-sm text-gray-400">${
+                          video.others.views
+                        } views</p>
                     </div>
                 </div>
-                <button onclick=loadVideoDetails("${video.video_id}") class="btn btn-block">Show Details</button>
+                <button onclick=loadVideoDetails("${
+                  video.video_id
+                }") class="btn btn-block">Show Details</button>
             </div>
     `;
     videoContainer.appendChild(videoCard);
