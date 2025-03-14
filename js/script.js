@@ -19,7 +19,39 @@ function loadVideos() {
       displayVideos(data.videos);
     });
 }
+const loadVideoDetails = (videoId) => {
+  const url = `https://openapi.programming-hero.com/api/phero-tube/video/${videoId}`;
+  fetch(url)
+    .then((res) => res.json())
+    .then((data) => displayVideoDetails(data.video));
+};
+const displayVideoDetails = (video) => {
+  console.log(video);
+  const videoDetails = document.getElementById("video_details");
+  videoDetails.showModal();
+  const detailsContainer = document.getElementById("details_container");
+  detailsContainer.innerHTML = `
+      <article class="relative overflow-hidden rounded-lg shadow-sm transition hover:shadow-lg">
+  <img
+    alt=""
+    src="${video.thumbnail}"
+    class="absolute inset-0 h-full w-full object-cover"
+  />
 
+  <div class="relative bg-gradient-to-t from-gray-900/50 to-gray-900/25 pt-32 sm:pt-48 lg:pt-64">
+    <div class="p-4 sm:p-6">
+      <p class="flex gap-3 text-sm text-gray-400">${video.authors[0].profile_name} </p>
+
+      <a href="#">
+        <h3 class="mt-0.5 text-lg text-white">${video.title}</h3>
+      </a>
+
+      <p class="mt-2  text-sm/relaxed text-white/95">${video.description}</p>
+    </div>
+  </div>
+</article>
+  `;
+};
 const loadCategoryVideos = (id) => {
   // console.log(id);
   const url = `https://openapi.programming-hero.com/api/phero-tube/category/${id}`;
@@ -77,6 +109,7 @@ const displayVideos = (videos) => {
                             </div>
                         </div>
                     </div>
+                    
                     <div class="description">
                         <h2 class="text-sm font-semibold">${video.title}</h2>
                         <p class="flex gap-3 text-sm text-gray-400">${video.authors[0].profile_name} <img class="w-5 h-5"
@@ -84,8 +117,8 @@ const displayVideos = (videos) => {
                                 alt="verification-sign"></p>
                         <p class="text-sm text-gray-400">${video.others.views} views</p>
                     </div>
-
                 </div>
+                <button onclick=loadVideoDetails("${video.video_id}") class="btn btn-block">Show Details</button>
             </div>
     `;
     videoContainer.appendChild(videoCard);
