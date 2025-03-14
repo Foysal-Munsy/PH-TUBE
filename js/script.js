@@ -9,8 +9,8 @@ function loadCategories() {
     .then((res) => res.json())
     .then((data) => displayCategories(data.categories));
 }
-function loadVideos() {
-  const url = "https://openapi.programming-hero.com/api/phero-tube/videos";
+function loadVideos(videoTitle = "") {
+  const url = `https://openapi.programming-hero.com/api/phero-tube/videos?title=${videoTitle}`;
   fetch(url)
     .then((res) => res.json())
     .then((data) => {
@@ -139,6 +139,12 @@ const displayVideos = (videos) => {
   });
 };
 
+document.getElementById("search-input").addEventListener("keyup", (event) => {
+  // input e ki dicche seita return korbe
+  const input = event.target.value;
+  // console.log(input);
+  loadVideos(input);
+});
 // Function Call
 loadCategories();
 // loadVideos();
