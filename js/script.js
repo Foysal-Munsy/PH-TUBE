@@ -7,7 +7,9 @@ function removeActiveClass() {
 function loadCategories() {
   fetch("https://openapi.programming-hero.com/api/phero-tube/categories")
     .then((res) => res.json())
-    .then((data) => displayCategories(data.categories));
+    .then((data) => {
+      displayCategories(data.categories);
+    });
 }
 function loadVideos(videoTitle = "") {
   const url = `https://openapi.programming-hero.com/api/phero-tube/videos?title=${videoTitle}`;
@@ -137,6 +139,24 @@ const displayVideos = (videos) => {
     `;
     videoContainer.appendChild(videoCard);
   });
+};
+
+const sortByViews = () => {
+  document.getElementById("sort-by-view");
+  const url = "https://openapi.programming-hero.com/api/phero-tube/videos";
+  fetch(url)
+    .then((res) => res.json())
+    .then((data) => {
+      const videos = data.videos;
+      videos.sort(
+        (a, b) => parseViews(b.others.views) - parseViews(a.others.views)
+      );
+      displayVideos(videos);
+      // console.log(videos);
+    });
+};
+const parseViews = (views) => {
+  return Number(views.replace(/K/, "000").replace(/M/, "000000"));
 };
 
 document.getElementById("search-input").addEventListener("keyup", (event) => {
